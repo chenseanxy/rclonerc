@@ -1,0 +1,10 @@
+# rclone-rc server for dev & testing
+version: "3"
+services:
+  serv:
+    image: rclone/rclone
+    command: rcd --rc-addr 0.0.0.0:5572
+    ports:
+    - 5572:5572
+    volumes:
+    - .local-rclone-config:/config/rclone

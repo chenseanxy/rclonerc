@@ -1,3 +1,5 @@
+.local-rclone-config
+
 # Temporary and binary files
 *~
 *.py[cod]
