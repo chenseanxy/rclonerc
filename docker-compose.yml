@@ -3,7 +3,14 @@ version: "3"
 services:
   serv:
     image: rclone/rclone
-    command: rcd --rc-addr 0.0.0.0:5572
+    command: 
+    - rcd
+    - --rc-addr
+    - 0.0.0.0:5572
+    - --rc-user
+    - devuser
+    - --rc-pass
+    - devpassword
     ports:
     - 5572:5572
     volumes:

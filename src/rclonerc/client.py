@@ -2,6 +2,7 @@ from json.decoder import JSONDecodeError
 import requests
 from requests.exceptions import HTTPError
 import json
+import os
 
 
 class Flags(object):
@@ -22,9 +23,14 @@ class Flags(object):
 class Config(object):
     def __init__(
         self, endpoint=None, timeout=None,
+        username=None, password=None,
     ) -> None:
-        self.endpoint = endpoint or "http://localhost:5572"
-        self.timeout = timeout or 3
+        self.endpoint = (
+            endpoint or os.getenv("RCLONERC_ENDPOINT") or "http://localhost:5572"
+        )
+        self.timeout = timeout or os.getenv("RCLONERC_TIMEOUT") or 3
+        self.username = username or os.getenv("RCLONERC_USERNAME") or ""
+        self.password = password or os.getenv("RCLONERC_PASSWORD") or ""
 
 
 class Client(object):
@@ -69,6 +75,7 @@ class Client(object):
             params=params,
             json=payload,
             timeout=self.config.timeout,
+            auth=(self.config.username, self.config.password)
         )
         try:
             body = resp.json()
